@@ -251,6 +251,7 @@ class Game:
         self.screen.blit(self.marcador1, (720, 8))
 
         if self.winner:
+            
             rect = self.winner.get_rect()
             self.screen.blit(self.winner, ((800 - rect.w)//2, (600 - rect.h) // 2) )
 
