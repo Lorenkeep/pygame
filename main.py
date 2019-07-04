@@ -154,7 +154,8 @@ class Game:
 
         self.marcador1 = self.fuente.render(str(self.puntuaciones[1]), 1, (255, 255, 255))
         self.marcador2 = self.fuente.render(str(self.puntuaciones[2]), 1, (255, 255, 255))
-
+        ##
+        
             
             
     def gameover(self):
@@ -223,9 +224,12 @@ class Game:
         #Modifica la posición de ball y comprueba sus
         if not self.pause:
             p = self.ball1.avanza()
+            
             if p:
                 self.pause = True
                 self.puntuaciones[p] += 1
+                self.ball1.cuentatoques = 0
+                self.ball1.velocidad = 5
                 self.marcador1 = self.fuente.render(str(self.puntuaciones[1]), 1, (255, 255, 255))
                 self.marcador2 = self.fuente.render(str(self.puntuaciones[2]), 1, (255, 255, 255))
 
@@ -236,8 +240,12 @@ class Game:
         self.ball1.comprobarChoque(self.player1)
         self.ball1.comprobarChoque(self.player2)
         
-        if self.ball1.cuentatoques >= 2:
-            self.ball1.velocidad +=1
+        if self.ball1.cuentatoques <= 4:
+            self.ball1.velocidad = 5
+        elif self.ball1.cuentatoques <= 10 :
+            self.ball1.velocidad = 8
+        else: 
+            self.ball1.velocidad = 14
 
 
     def render(self):
@@ -249,9 +257,11 @@ class Game:
         self.screen.blit(self.player2, (self.player2.x, self.player2.y))
         self.screen.blit(self.marcador2, (32, 8))
         self.screen.blit(self.marcador1, (720, 8))
+        #self.rectmarcador1 = self.marcador1.get_rect()
+        #self.screen.blit(self.marcador1.get_rect (topright=(720, 8)))
 
         if self.winner:
-            
+
             rect = self.winner.get_rect()
             self.screen.blit(self.winner, ((800 - rect.w)//2, (600 - rect.h) // 2) )
 
@@ -270,7 +280,7 @@ class Game:
             self.recalculate()
 
             self.render()
-
+        print(ball1.cuentatoques())
 
 if __name__ == '__main__':
     pg.init()
